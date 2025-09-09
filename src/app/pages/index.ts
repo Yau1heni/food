@@ -1,1 +1,1 @@
-export { FoodPage } from './food/Food-page.tsx';
+export { FoodPage } from './food/FoodPage.tsx';

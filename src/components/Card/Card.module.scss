@@ -1,0 +1,61 @@
+@import "styles/variables.scss";
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 348px;
+  cursor: pointer;
+}
+
+.card:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.image {
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  background: $color-grey;
+}
+
+.image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-repeat: no-repeat;
+}
+
+.cardBody {
+  padding: $space-xl $space-xs;
+  background: $color-light;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.captionSlot {
+  font-weight: 500;
+  font-size: $font-size-xs;
+  color: $color-secondary;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contentSlot {
+  font-weight: 700;
+  font-size: $font-size-m;
+  line-height: 122%;
+}
+
+
+.subTitle {
+  color: $color-secondary;
+}

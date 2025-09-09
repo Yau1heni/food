@@ -1,0 +1,38 @@
+@import 'styles/variables.scss';
+
+.inputContainer {
+  position: relative;
+}
+
+.input {
+  border: 1px solid $color-light;
+  background: $color-light;
+  padding: 14px 38px 14px 12px;
+  font-weight: 400;
+  font-size: $font-size-s;
+  line-height: 125%;
+  width: 100%;
+}
+
+.input:focus {
+  border-color: $color-primary;
+}
+
+.input::placeholder, input:disabled {
+  color: $color-secondary;
+}
+
+.notEmpty {
+  color: $color-dark;
+}
+
+.afterSlot {
+  position: absolute;
+  right: $space-xs;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
