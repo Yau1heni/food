@@ -1,8 +1,8 @@
-import { routesConfig } from 'config/routes.tsx';
+import { routesConfig } from 'config/routes-config.tsx';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router';
-import './index.css';
+import './styles/styles.scss';
 
 const router = createBrowserRouter(routesConfig);
 

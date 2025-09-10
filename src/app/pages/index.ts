@@ -1,1 +1,1 @@
-export { FoodPage } from './food/FoodPage.tsx';
+export { RecipesPage } from './recipes/RecipesPage.tsx';

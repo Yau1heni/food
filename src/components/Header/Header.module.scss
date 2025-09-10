@@ -1,0 +1,31 @@
+@use 'styles/variables.scss' as *;
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 100px;
+
+  .navGroup {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: $space-l;
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: $space-m;
+  }
+}
+
+
+

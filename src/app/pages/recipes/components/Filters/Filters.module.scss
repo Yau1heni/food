@@ -1,0 +1,12 @@
+@use 'styles/variables.scss' as *;
+
+.search {
+  gap: 19px;
+  display: flex;
+  margin-bottom: $space-l;
+}
+
+.dropdown {
+  width: 300px;
+  margin-left: auto;
+}

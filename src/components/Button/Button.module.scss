@@ -1,4 +1,4 @@
-@import "styles/variables.scss";
+@use 'styles/variables.scss' as *;
 
 .button {
   padding: 15px 19px;
@@ -7,6 +7,7 @@
   font-size: $font-size-m;
   line-height: 120%;
   color: $color-light;
+  border-radius: $border-radius;
   cursor: pointer;
   border: none;
   display: flex;

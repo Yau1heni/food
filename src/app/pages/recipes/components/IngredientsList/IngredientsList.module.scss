@@ -1,0 +1,12 @@
+.ingredientsList {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 64px;
+
+  .captionSlot {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+}
