@@ -35,6 +35,16 @@ export type Ingredient = {
   unit: string;
 };
 
+export type Equipments = {
+  id: number;
+  name: string;
+};
+
+export type Direction = {
+  id: number;
+  description: string;
+};
+
 export type RecipeCategory = StrapiBase & {
   title: string;
   createdAt: string;
@@ -60,9 +70,11 @@ export type Recipe = StrapiBase & {
   images: StrapiImage[];
   ingradients: Ingredient[];
   category: RecipeCategory;
+  equipments: Equipments[];
+  directions: Direction[];
 };
 
 export type ApiResponse<T> = {
-  data: T[];
+  data: T;
   meta: Meta;
 };

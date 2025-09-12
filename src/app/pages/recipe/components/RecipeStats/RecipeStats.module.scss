@@ -1,0 +1,16 @@
+@use 'styles/mixins.scss' as *;
+
+.recipeStats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px 100px;
+  margin: 0 auto;
+
+  @include respond(xl) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include respond(md) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px 32px;
+  }
+}

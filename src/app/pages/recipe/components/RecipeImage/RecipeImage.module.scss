@@ -1,0 +1,13 @@
+@use 'styles/mixins.scss' as *;
+
+.recipeImage {
+  width: 448px;
+
+  @include respond(sm) {
+    max-width: 344px;
+  }
+}
+
+.image {
+  width: 100%;
+}

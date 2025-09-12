@@ -3,7 +3,9 @@ import Button from 'components/Button';
 import Card from 'components/Card';
 import Text from 'components/Text';
 import AlarmClockIcon from 'components/icons/AlarmClockIcon';
+import { routes } from 'config/routes.ts';
 import type { FC } from 'react';
+import { Link } from 'react-router';
 
 import styles from './IngredientsList.module.scss';
 
@@ -20,31 +22,32 @@ export const IngredientsList: FC<IngredientsListProps> = ({ recipes }) => {
   return (
     <div className={styles.ingredientsList}>
       {recipes?.map((el) => (
-        <Card
-          captionSlot={
-            <div className={styles.captionSlot}>
-              <AlarmClockIcon />
-              {`${el.cookingTime} minutes`}
-            </div>
-          }
-          key={el.id}
-          title={el.name}
-          subtitle={getIngredients(el.ingradients)}
-          image={el.images[0].url}
-          actionSlot={
-            <div
-              style={{
-                display: 'flex',
-                width: '100%',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-            >
-              <Text weight={'bold'} view={'p-18'} color={'accent'}>{`${el.calories} kcal`}</Text>
-              <Button>Save</Button>
-            </div>
-          }
-        />
+        <Link key={el.id} to={routes.recipe.create(el.documentId)}>
+          <Card
+            captionSlot={
+              <div className={styles.captionSlot}>
+                <AlarmClockIcon />
+                {`${el.cookingTime} minutes`}
+              </div>
+            }
+            title={el.name}
+            subtitle={getIngredients(el.ingradients)}
+            image={el.images[0].url}
+            actionSlot={
+              <div
+                style={{
+                  display: 'flex',
+                  width: '100%',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <Text weight={'bold'} view={'p-18'} color={'accent'}>{`${el.calories} kcal`}</Text>
+                <Button>Save</Button>
+              </div>
+            }
+          />
+        </Link>
       ))}
     </div>
   );

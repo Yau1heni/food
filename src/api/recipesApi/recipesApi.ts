@@ -10,7 +10,16 @@ export const recipesApi = {
     );
 
     // const res = await instance.get<ApiResponse>('/recipes?populate=*');
-    const res = await instance.get<ApiResponse<Recipe>>(`/recipes?${queryString}`);
+    const res = await instance.get<ApiResponse<Recipe[]>>(`/recipes?${queryString}`);
+    return res.data;
+  },
+  async getRecipe(id: string) {
+    const queryString = qs.stringify(
+      { populate: ['ingradients', 'images', 'category', 'equipments', 'directions'] },
+      { encodeValuesOnly: true }
+    );
+
+    const res = await instance.get<ApiResponse<Recipe>>(`/recipes/${id}?${queryString}`);
     return res.data;
   },
 };

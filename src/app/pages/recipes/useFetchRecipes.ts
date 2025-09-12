@@ -5,14 +5,14 @@ import type { Option } from 'components/MultiDropdown';
 import { useCallback, useEffect, useState } from 'react';
 
 type UseFetchRecipes = {
-  recipes: ApiResponse<Recipe> | null;
+  recipes: ApiResponse<Recipe[]> | null;
   categories: Option[] | null;
   loading: boolean;
   error: string | null;
 };
 
 export const useFetchRecipes = (): UseFetchRecipes => {
-  const [recipes, setRecipes] = useState<ApiResponse<Recipe> | null>(null);
+  const [recipes, setRecipes] = useState<ApiResponse<Recipe[]> | null>(null);
   const [categories, setCategories] = useState<Option[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

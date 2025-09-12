@@ -1,4 +1,5 @@
 @use 'styles/variables.scss' as *;
+@use 'styles/mixins' as *;
 
 .header {
   display: flex;
@@ -6,17 +7,31 @@
   align-items: center;
   padding: 14px 100px;
 
+  @include respond(lg) {
+    padding: 14px 16px;
+  }
+
   .navGroup {
     display: flex;
     align-items: center;
     gap: 80px;
 
+    @include respond(lg) {
+      gap: $space-m;
+    }
+
+    @include respond(md) {
+      display: none;
+    }
+
     .logo {
       display: flex;
       align-items: center;
       gap: $space-l;
-      text-decoration: none;
-      color: inherit;
+
+      @include respond(lg) {
+        gap: $space-xxs;
+      }
     }
   }
 
@@ -24,8 +39,9 @@
     display: flex;
     align-items: center;
     gap: $space-m;
+
+    @include respond(md) {
+      margin-left: auto;
+    }
   }
 }
-
-
-

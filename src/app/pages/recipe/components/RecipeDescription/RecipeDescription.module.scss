@@ -1,0 +1,10 @@
+@use 'styles/mixins.scss' as *;
+
+.recipeDescription {
+  padding: 36px;
+  background: rgba(181, 70, 15, 0.33);
+
+  @include respond(md) {
+    padding: 16px
+  }
+}
