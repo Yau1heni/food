@@ -29,7 +29,7 @@ const Icon: React.FC<React.PropsWithChildren<IconProps>> = (props) => {
       stroke="currentColor"
       fill="currentColor"
       viewBox={viewBox}
-      className={cn(color ? styles[color] : undefined, className)}
+      className={cn(color ? styles[color] : undefined, styles.icon, className)}
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >
