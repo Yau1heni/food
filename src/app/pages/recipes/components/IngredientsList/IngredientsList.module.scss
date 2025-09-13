@@ -1,8 +1,15 @@
+@use 'styles/mixins.scss' as *;
+
 .ingredientsList {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 64px;
+
+  @include respond(lg) {
+    justify-content: center;
+    gap: 32px;
+  }
 
   .captionSlot {
     display: flex;

@@ -47,7 +47,7 @@ export const RecipePage = () => {
         <div className={styles.backgroundImage} />
         <div className={styles.recipeHeader}>
           <Link to={routes.recipes.mask} className={styles.goBack} aria-label={'link go back'}>
-            <ArrowRightIcon />
+            <ArrowRightIcon width={32} height={32} viewBox="0 0 32 32" color={'accent'} />
           </Link>
           <RecipeTitle title={recipe.data.name} />
         </div>

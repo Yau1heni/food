@@ -1,8 +1,17 @@
 @use 'styles/variables.scss' as *;
+@use 'styles/mixins.scss' as *;
 
 .bannerImage {
   width: 100%;
   height: 572px;
+
+  @include respond(lg) {
+    height: 360px;
+  }
+
+@include respond(sm) {
+    display: none;
+  }
 
   img {
     width: 100%;
@@ -17,6 +26,11 @@
   flex-direction: column;
   gap: 48px;
   padding: 36px 100px;
+
+  @include respond(lg) {
+    padding: 24px;
+    gap: 24px
+  }
 
   .loaderContainer {
     display: flex;

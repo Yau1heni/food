@@ -11,7 +11,7 @@ type UseFetchRecipes = {
   error: string | null;
 };
 
-export const useFetchRecipes = (): UseFetchRecipes => {
+export const useFetchRecipes = (page: number): UseFetchRecipes => {
   const [recipes, setRecipes] = useState<ApiResponse<Recipe[]> | null>(null);
   const [categories, setCategories] = useState<Option[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -34,12 +34,12 @@ export const useFetchRecipes = (): UseFetchRecipes => {
   }, []);
 
   // Загрузка рецептов
-  const fetchRecipes = useCallback(async (): Promise<void> => {
+  const fetchRecipes = useCallback(async (page: number): Promise<void> => {
     try {
       setLoading(true);
       setError(null);
 
-      const recipesData = await recipesApi.getRecipes();
+      const recipesData = await recipesApi.getRecipes(page);
       setRecipes(recipesData);
     } catch (err) {
       setError(`Ошибка при загрузке рецептов: ${err instanceof Error ? err.message : String(err)}`);
@@ -49,9 +49,9 @@ export const useFetchRecipes = (): UseFetchRecipes => {
   }, []);
 
   useEffect(() => {
-    fetchRecipes();
+    fetchRecipes(page);
     fetchCategories();
-  }, [fetchCategories, fetchRecipes]);
+  }, [fetchCategories, fetchRecipes, page]);
 
   return { recipes, categories, loading, error };
 };

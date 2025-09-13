@@ -3,9 +3,12 @@ import { instance } from 'config/axios-config.ts';
 import qs from 'qs';
 
 export const recipesApi = {
-  async getRecipes() {
+  async getRecipes(page = 1) {
     const queryString = qs.stringify(
-      { populate: ['ingradients', 'images', 'category'] },
+      {
+        populate: ['ingradients', 'images', 'category'],
+        pagination: { pageSize: 9, page: page },
+      },
       { encodeValuesOnly: true }
     );
 

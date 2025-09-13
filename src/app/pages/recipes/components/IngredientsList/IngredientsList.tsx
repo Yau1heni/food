@@ -21,34 +21,42 @@ export const IngredientsList: FC<IngredientsListProps> = ({ recipes }) => {
 
   return (
     <div className={styles.ingredientsList}>
-      {recipes?.map((el) => (
-        <Link key={el.id} to={routes.recipe.create(el.documentId)}>
-          <Card
-            captionSlot={
-              <div className={styles.captionSlot}>
-                <AlarmClockIcon />
-                {`${el.cookingTime} minutes`}
-              </div>
-            }
-            title={el.name}
-            subtitle={getIngredients(el.ingradients)}
-            image={el.images[0].url}
-            actionSlot={
-              <div
-                style={{
-                  display: 'flex',
-                  width: '100%',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <Text weight={'bold'} view={'p-18'} color={'accent'}>{`${el.calories} kcal`}</Text>
-                <Button>Save</Button>
-              </div>
-            }
-          />
-        </Link>
-      ))}
+      {recipes && recipes.length > 0 ? (
+        recipes.map((el) => (
+          <Link key={el.id} to={routes.recipe.create(el.documentId)}>
+            <Card
+              captionSlot={
+                <div className={styles.captionSlot}>
+                  <AlarmClockIcon />
+                  {`${el.cookingTime} minutes`}
+                </div>
+              }
+              title={el.name}
+              subtitle={getIngredients(el.ingradients)}
+              image={el.images[0].url}
+              actionSlot={
+                <div
+                  style={{
+                    display: 'flex',
+                    width: '100%',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Text
+                    weight={'bold'}
+                    view={'p-18'}
+                    color={'accent'}
+                  >{`${el.calories} kcal`}</Text>
+                  <Button>Save</Button>
+                </div>
+              }
+            />
+          </Link>
+        ))
+      ) : (
+        <Text>Список ингридиентов пуст</Text>
+      )}
     </div>
   );
 };

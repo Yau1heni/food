@@ -3,6 +3,7 @@ import { useFetchRecipes } from 'app/pages/recipes/useFetchRecipes.ts';
 import { Layout } from 'components/Layout';
 import Loader from 'components/Loader';
 import { type Option } from 'components/MultiDropdown';
+import Pagination from 'components/Pagination/Pagination.tsx';
 import Text from 'components/Text';
 import { useCallback, useState } from 'react';
 
@@ -13,12 +14,13 @@ import { IngredientsList } from './components/IngredientsList';
 export const RecipesPage = () => {
   const [value, setValue] = useState<Option[]>([]);
   const [term, setTerm] = useState('');
+  const [page, setPage] = useState(1);
 
   const getTitle = useCallback(function (value: Option[]) {
     return value.length > 0 ? value.map((v) => v.value).join(', ') : 'Categories';
   }, []);
 
-  const { recipes, categories, loading, error } = useFetchRecipes();
+  const { recipes, categories, loading, error } = useFetchRecipes(page);
 
   if (error) return <Text>{error}</Text>;
 
@@ -42,7 +44,12 @@ export const RecipesPage = () => {
             <Loader />
           </div>
         ) : (
-          <IngredientsList recipes={recipes?.data} />
+          <>
+            <IngredientsList recipes={recipes?.data} />
+            {!!recipes?.meta.pagination.total && (
+              <Pagination page={page} onChange={setPage} total={recipes.meta.pagination.total} />
+            )}
+          </>
         )}
       </div>
     </Layout>
