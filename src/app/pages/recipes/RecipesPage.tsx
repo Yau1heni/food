@@ -1,5 +1,6 @@
 import { categoriesApi } from 'api/categoriesApi';
 import { useFetchRecipes } from 'app/pages/recipes/useFetchRecipes.ts';
+import banner from 'assets/images/banner.webp';
 import { Layout } from 'components/Layout';
 import Loader from 'components/Loader';
 import { type Option } from 'components/MultiDropdown';
@@ -58,7 +59,7 @@ export const RecipesPage = () => {
   return (
     <Layout>
       <section className={styles.bannerImage}>
-        <img src="src/assets/images/banner.webp" alt="banner" />
+        <img src={banner} alt="banner" />
       </section>
       <div className={styles.content}>
         <Description />
