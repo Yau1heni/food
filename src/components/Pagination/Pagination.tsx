@@ -63,14 +63,14 @@ const Pagination: FC<PaginationProps> = ({ total, page = 1, onChange }) => {
 
       <button
         onClick={handleNext}
-        disabled={page === pages.length - 1}
+        disabled={page >= pages.length - 1}
         className={cn(styles.arrowButton, page === total && styles.disabled)}
       >
         <ArrowLeftIcon
           width={32}
           widths={32}
           viewBox={'0 0 32 32'}
-          color={page === pages.length - 1 ? 'secondary' : 'primary'}
+          color={page >= pages.length - 1 ? 'secondary' : 'primary'}
         />
       </button>
     </div>

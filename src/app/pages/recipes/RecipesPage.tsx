@@ -1,28 +1,59 @@
-import { Filters } from 'app/pages/recipes/components/Filters/Filters.tsx';
+import { categoriesApi } from 'api/categoriesApi';
 import { useFetchRecipes } from 'app/pages/recipes/useFetchRecipes.ts';
 import { Layout } from 'components/Layout';
 import Loader from 'components/Loader';
 import { type Option } from 'components/MultiDropdown';
 import Pagination from 'components/Pagination/Pagination.tsx';
 import Text from 'components/Text';
+import { useFetch } from 'hooks/useFetch.ts';
 import { useCallback, useState } from 'react';
 
 import styles from './RecipesPage.module.scss';
 import { Description } from './components/Description';
+import { Filters } from './components/Filters';
 import { IngredientsList } from './components/IngredientsList';
 
 export const RecipesPage = () => {
-  const [value, setValue] = useState<Option[]>([]);
-  const [term, setTerm] = useState('');
-  const [page, setPage] = useState(1);
+  const [selectedCategories, setSelectedCategories] = useState<Option[]>([]);
+
+  const {
+    data: categories,
+    error: errorCategories,
+    loading: loadingCategories,
+  } = useFetch(categoriesApi.getCategories);
+
+  const {
+    recipes,
+    error,
+    loading,
+    setAppliedSearchTerm,
+    searchTerm,
+    setSearchTerm,
+    page,
+    setPage,
+  } = useFetchRecipes(selectedCategories);
+
+  const options =
+    categories?.data.map((c) => ({
+      key: c.id.toString(),
+      value: c.title,
+    })) || [];
 
   const getTitle = useCallback(function (value: Option[]) {
     return value.length > 0 ? value.map((v) => v.value).join(', ') : 'Categories';
   }, []);
 
-  const { recipes, categories, loading, error } = useFetchRecipes(page);
+  const onChangeCategories = (value: Option[]) => {
+    setPage(1);
+    setSelectedCategories(value);
+  };
 
-  if (error) return <Text>{error}</Text>;
+  const onSearchFilter = () => {
+    setPage(1);
+    setAppliedSearchTerm(searchTerm);
+  };
+
+  if (error || errorCategories) return <Text>{error}</Text>;
 
   return (
     <Layout>
@@ -32,14 +63,15 @@ export const RecipesPage = () => {
       <div className={styles.content}>
         <Description />
         <Filters
-          value={value}
-          term={term}
-          setValue={setValue}
-          setTerm={setTerm}
-          categories={categories}
+          value={selectedCategories}
+          searchTerm={searchTerm}
+          setValue={onChangeCategories}
+          setSearchTerm={setSearchTerm}
+          options={options}
           getTitle={getTitle}
+          onClick={onSearchFilter}
         />
-        {loading ? (
+        {loading || loadingCategories ? (
           <div className={styles.loaderContainer}>
             <Loader />
           </div>

@@ -2,12 +2,34 @@ import type { ApiResponse, Recipe } from 'api/types.ts';
 import { instance } from 'config/axios-config.ts';
 import qs from 'qs';
 
+type Filters = {
+  name: Record<string, string>;
+  category?: {
+    id: Record<string, string[]>;
+  };
+};
+
 export const recipesApi = {
-  async getRecipes(page = 1) {
+  async getRecipes(page = 1, term = '', category = 'Categories') {
+    const filters: Filters = {
+      name: {
+        $containsi: term,
+      },
+    };
+
+    if (category) {
+      filters.category = {
+        id: {
+          $in: category.split(','),
+        },
+      };
+    }
+
     const queryString = qs.stringify(
       {
         populate: ['ingradients', 'images', 'category'],
         pagination: { pageSize: 9, page: page },
+        filters: filters,
       },
       { encodeValuesOnly: true }
     );

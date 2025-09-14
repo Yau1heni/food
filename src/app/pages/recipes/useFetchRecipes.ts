@@ -1,57 +1,43 @@
-import { categoriesApi } from 'api/categoriesApi';
 import { recipesApi } from 'api/recipesApi';
 import type { ApiResponse, Recipe } from 'api/types.ts';
 import type { Option } from 'components/MultiDropdown';
-import { useCallback, useEffect, useState } from 'react';
+import { useFetch } from 'hooks/useFetch.ts';
+import { useCallback, useState } from 'react';
 
 type UseFetchRecipes = {
   recipes: ApiResponse<Recipe[]> | null;
-  categories: Option[] | null;
   loading: boolean;
   error: string | null;
+  setAppliedSearchTerm: (appliedSearchTerm: string) => void;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+  page: number;
+  setPage: (page: number) => void;
 };
 
-export const useFetchRecipes = (page: number): UseFetchRecipes => {
-  const [recipes, setRecipes] = useState<ApiResponse<Recipe[]> | null>(null);
-  const [categories, setCategories] = useState<Option[] | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+export const useFetchRecipes = (value: Option[]): UseFetchRecipes => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [appliedSearchTerm, setAppliedSearchTerm] = useState('');
+  const [page, setPage] = useState(1);
 
-  const fetchCategories = useCallback(async (): Promise<void> => {
-    try {
-      const categoriesData = await categoriesApi.getCategories();
-      setCategories(
-        categoriesData.data.map((c) => ({
-          key: c.id.toString(),
-          value: c.title,
-        }))
-      );
-    } catch (err) {
-      setError(
-        `Ошибка при загрузке категорий: ${err instanceof Error ? err.message : String(err)}`
-      );
-    }
+  const getCategoryKeys = useCallback(function (value: Option[]) {
+    return value.length > 0 ? value.map((v) => v.key).join(', ') : '';
   }, []);
 
-  // Загрузка рецептов
-  const fetchRecipes = useCallback(async (page: number): Promise<void> => {
-    try {
-      setLoading(true);
-      setError(null);
+  const {
+    data: recipes,
+    error,
+    loading,
+  } = useFetch(recipesApi.getRecipes, page, appliedSearchTerm, getCategoryKeys(value));
 
-      const recipesData = await recipesApi.getRecipes(page);
-      setRecipes(recipesData);
-    } catch (err) {
-      setError(`Ошибка при загрузке рецептов: ${err instanceof Error ? err.message : String(err)}`);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchRecipes(page);
-    fetchCategories();
-  }, [fetchCategories, fetchRecipes, page]);
-
-  return { recipes, categories, loading, error };
+  return {
+    recipes,
+    loading,
+    error,
+    searchTerm,
+    setSearchTerm,
+    page,
+    setPage,
+    setAppliedSearchTerm,
+  };
 };

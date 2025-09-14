@@ -7,28 +7,29 @@ import { type FC } from 'react';
 import styles from './Filters.module.scss';
 
 type FiltersProps = {
-  categories: Option[] | null;
+  options: Option[];
   value: Option[];
   setValue: (value: Option[]) => void;
-  term: string;
-  setTerm: (term: string) => void;
+  searchTerm: string;
+  setSearchTerm: (searchTerm: string) => void;
   getTitle: (value: Option[]) => string;
+  onClick: () => void;
 };
 
 export const Filters: FC<FiltersProps> = (props) => {
-  const { categories, value, setValue, term, setTerm, getTitle } = props;
+  const { options, value, setValue, searchTerm, setSearchTerm, getTitle, onClick } = props;
 
   return (
     <div>
       <div className={styles.search}>
-        <Input value={term} onChange={setTerm} />
-        <Button>
+        <Input value={searchTerm} onChange={setSearchTerm} />
+        <Button onClick={onClick}>
           <SearchIcon />
         </Button>
       </div>
       <MultiDropdown
         className={styles.dropdown}
-        options={categories || []}
+        options={options}
         value={value}
         onChange={setValue}
         getTitle={getTitle}
