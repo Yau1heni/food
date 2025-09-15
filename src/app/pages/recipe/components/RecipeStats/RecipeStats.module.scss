@@ -6,10 +6,10 @@
   gap: 50px 100px;
   margin: 0 auto;
 
-  @include respond(xl) {
+  @include desktop {
     grid-template-columns: repeat(2, 1fr);
   }
-  @include respond(md) {
+  @include tablet {
     grid-template-columns: repeat(3, 1fr);
     gap: 16px 32px;
   }

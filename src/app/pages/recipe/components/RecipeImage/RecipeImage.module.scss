@@ -3,7 +3,7 @@
 .recipeImage {
   width: 448px;
 
-  @include respond(sm) {
+  @include mobile {
     max-width: 344px;
   }
 }

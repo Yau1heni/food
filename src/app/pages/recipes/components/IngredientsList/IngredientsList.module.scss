@@ -4,9 +4,10 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  align-items: stretch;
   gap: 64px;
 
-  @include respond(lg) {
+  @include laptop {
     justify-content: center;
     gap: 32px;
   }

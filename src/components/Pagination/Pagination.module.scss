@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
 
-  @include respond(sm) {
+  @include mobile {
     gap: $space-xs;
   }
 }
@@ -42,7 +42,7 @@
     cursor: default;
   }
 
-  @include respond(sm) {
+  @include mobile {
     display: none;
   }
 }

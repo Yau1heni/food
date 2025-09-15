@@ -9,7 +9,7 @@
   border: none;
   cursor: pointer;
 
-  @include respond(md) {
+  @include tablet {
     display: block;
   }
 }
