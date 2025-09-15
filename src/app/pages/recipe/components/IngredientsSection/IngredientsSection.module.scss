@@ -5,11 +5,11 @@
   display: flex;
   gap: 50px;
 
-  @include respond(lg) {
+  @include laptop {
     gap: 16px
   }
 
-  @include respond(md) {
+  @include tablet {
     flex-direction: column;
   }
 }
@@ -21,7 +21,7 @@
   background: $color-primary;
   margin: 20px auto;
 
-  @include respond(md) {
+  @include tablet {
     display: none;
   }
 }

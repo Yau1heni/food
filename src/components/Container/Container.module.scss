@@ -1,0 +1,11 @@
+@use 'styles/mixins.scss' as *;
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 14px 36px;
+
+   @include laptop {
+    padding: 14px 16px;
+  }
+}

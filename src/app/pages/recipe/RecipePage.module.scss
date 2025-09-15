@@ -2,20 +2,8 @@
 @use 'styles/mixins.scss' as *;
 
 .recipe {
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-  padding: 49px 100px;
   position: relative;
   overflow: hidden;
-
-  @include laptop{
-    padding: 24px 16px
-  }
-
-  @include tablet {
-    gap: 24px;
-  }
 
   .backgroundImage {
     position: absolute;
@@ -31,24 +19,40 @@
     }
   }
 
-  &Header {
+  &Container {
     display: flex;
-    align-items: center;
-    gap: $space-m;
-
-    .goBack {
-      width: 32px;
-      height: 32px;
-    }
-  }
-
-  &Stats {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 48px;
+    position: relative;
 
     @include tablet {
-      flex-direction: column-reverse;
+      gap: 24px;
+    }
+
+    .recipeHeader {
+      display: flex;
+      align-items: center;
       gap: $space-m;
+      margin-top: 35px;
+
+      @include tablet {
+        margin-top: 24px;
+      }
+
+      .goBack {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .stats {
+      display: flex;
+      align-items: center;
+
+      @include tablet {
+        flex-direction: column-reverse;
+        gap: $space-m;
+      }
     }
   }
 }

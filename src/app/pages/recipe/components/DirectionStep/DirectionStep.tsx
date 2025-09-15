@@ -10,11 +10,11 @@ type DirectionStepProps = {
 
 export const DirectionStep: React.FC<DirectionStepProps> = ({ description, step }) => {
   return (
-    <div className={styles.directionStep}>
+    <li className={styles.directionStep}>
       <Text className={styles.stepNumber} weight={'bold'}>
         Step {step}
       </Text>
       <Text view={'p-14'}>{description}</Text>
-    </div>
+    </li>
   );
 };

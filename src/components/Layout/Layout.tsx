@@ -7,7 +7,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className={styles.layout}>
       <Header />
-      <main className={styles.main}>{children}</main>
+      <main>{children}</main>
     </div>
   );
 };

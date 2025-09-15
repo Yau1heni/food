@@ -1,13 +1,13 @@
 import { categoriesApi } from 'api/categoriesApi';
 import { useFetchRecipes } from 'app/pages/recipes/useFetchRecipes.ts';
 import banner from 'assets/images/banner.webp';
+import { Container } from 'components/Container';
 import { Layout } from 'components/Layout';
-import Loader from 'components/Loader';
 import { type Option } from 'components/MultiDropdown';
 import Pagination from 'components/Pagination/Pagination.tsx';
 import Text from 'components/Text';
 import { useFetch } from 'hooks/useFetch.ts';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import styles from './RecipesPage.module.scss';
 import { Description } from './components/Description';
@@ -33,27 +33,6 @@ export const RecipesPage = () => {
     page,
     setPage,
   } = useFetchRecipes(selectedCategories);
-
-  const options =
-    categories?.data.map((c) => ({
-      key: c.id.toString(),
-      value: c.title,
-    })) || [];
-
-  const getTitle = useCallback(function (value: Option[]) {
-    return value.length > 0 ? value.map((v) => v.value).join(', ') : 'Categories';
-  }, []);
-
-  const onChangeCategories = (value: Option[]) => {
-    setPage(1);
-    setSelectedCategories(value);
-  };
-
-  const onSearchFilter = () => {
-    setPage(1);
-    setAppliedSearchTerm(searchTerm);
-  };
-
   if (error || errorCategories) return <Text>{error}</Text>;
 
   return (
@@ -61,30 +40,29 @@ export const RecipesPage = () => {
       <section className={styles.bannerImage}>
         <img src={banner} alt="banner" />
       </section>
-      <div className={styles.content}>
-        <Description />
-        <Filters
-          value={selectedCategories}
-          searchTerm={searchTerm}
-          setValue={onChangeCategories}
-          setSearchTerm={setSearchTerm}
-          options={options}
-          getTitle={getTitle}
-          onClick={onSearchFilter}
-        />
-        {loading || loadingCategories ? (
-          <div className={styles.loaderContainer}>
-            <Loader />
-          </div>
-        ) : (
-          <>
-            <IngredientsList recipes={recipes?.data} />
-            {!!recipes?.meta.pagination.total && (
-              <Pagination page={page} onChange={setPage} total={recipes.meta.pagination.total} />
-            )}
-          </>
-        )}
-      </div>
+
+      <Container>
+        <section className={styles.content}>
+          <Description />
+          <Filters
+            value={selectedCategories}
+            searchTerm={searchTerm}
+            setValue={setSelectedCategories}
+            setSearchTerm={setSearchTerm}
+            setAppliedSearchTerm={setAppliedSearchTerm}
+            categories={categories}
+            setPage={setPage}
+          />
+          {
+            <>
+              <IngredientsList loading={loading || loadingCategories} recipes={recipes?.data} />
+              {recipes?.meta.pagination.total !== 0 && (
+                <Pagination page={page} onChange={setPage} total={recipes?.meta.pagination.total} />
+              )}
+            </>
+          }
+        </section>
+      </Container>
     </Layout>
   );
 };

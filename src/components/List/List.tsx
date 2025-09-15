@@ -1,28 +1,19 @@
-import { ColumnsLayout } from 'components/ColumnsLayout';
 import Text from 'components/Text';
-import type { JSX } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 
 import styles from './List.module.scss';
 
-type ListProps<T> = {
-  items: T[];
+type ListProps = {
   title: string;
-  render: (item: T) => JSX.Element;
-};
+} & PropsWithChildren;
 
-export const List = <T,>({ items, render, title }: ListProps<T>) => {
-  const renderList = items.map((item, index) => (
-    <li key={index} className={styles.listItem}>
-      {render(item)}
-    </li>
-  ));
-
+export const List: FC<ListProps> = ({ children, title }) => {
   return (
-    <div className={styles.ingredientsList}>
+    <div className={styles.list}>
       <Text view={'p-20'} weight={'bold'}>
         {title}
       </Text>
-      <ColumnsLayout>{renderList}</ColumnsLayout>
+      <ul>{children}</ul>
     </div>
   );
 };

@@ -9,14 +9,14 @@ import { usePagination } from './usePagination.ts';
 
 type PaginationProps = {
   /** Общее количество элементов */
-  total: number;
+  total?: number;
   /** Текущая страница */
   page?: number;
   /** Callback, вызываемый при взаимодействии с элементами пагинации */
   onChange?: (value: number) => void;
 };
 
-const Pagination: FC<PaginationProps> = ({ total, page = 1, onChange }) => {
+const Pagination: FC<PaginationProps> = ({ total = 0, page = 1, onChange }) => {
   const pages = usePagination({ total, page });
 
   const handlePrev = () => {

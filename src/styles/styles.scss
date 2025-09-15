@@ -5,6 +5,7 @@ html, body {
   font-family: $font-family, sans-serif;
   margin: 0;
   padding: 0;
+  background: $color-background;
 }
 
 * {
@@ -32,4 +33,10 @@ input, input:focus {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+ul, ul li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }

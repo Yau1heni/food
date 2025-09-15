@@ -12,26 +12,22 @@ type IngredientsSectionProps = {
 };
 
 export const IngredientsSection: FC<IngredientsSectionProps> = ({ ingredients, equipments }) => {
-  const renderIngredients = (ingredient: Ingredient) => {
-    return (
-      <IngredientItem
-        key={ingredient.id}
-        name={ingredient.name}
-        amount={ingredient.amount}
-        unit={ingredient.unit}
-      />
-    );
-  };
+  const renderIngredients = ingredients.map((ingredient) => (
+    <IngredientItem
+      key={ingredient.id}
+      name={ingredient.name}
+      amount={ingredient.amount}
+      unit={ingredient.unit}
+    />
+  ));
 
-  const renderEquipment = (equipment: Equipments) => {
-    return <EquipmentItem key={equipment.id} name={equipment.name} />;
-  };
+  const renderEquipment = equipments.map(({ name, id }) => <EquipmentItem key={id} name={name} />);
 
   return (
-    <div className={styles.ingredientsSection}>
-      <List title={'Ingredients'} render={renderIngredients} items={ingredients} />
+    <section className={styles.ingredientsSection}>
+      <List title={'Ingredients'}>{renderIngredients}</List>
       <div className={styles.line} />
-      <List title={'Equipment'} render={renderEquipment} items={equipments} />
-    </div>
+      <List title={'Equipment'}>{renderEquipment}</List>
+    </section>
   );
 };

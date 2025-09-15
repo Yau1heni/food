@@ -10,9 +10,11 @@ type InfoItemProps = {
 
 export const InfoItem: React.FC<InfoItemProps> = ({ label, value }) => {
   return (
-    <div className={styles.infoItem}>
-      <Text>{label}</Text>
-      <Text color={'accent'}>{value}</Text>
-    </div>
+    <li className={styles.infoItem}>
+      <Text maxLines={1}>{label}</Text>
+      <Text maxLines={1} color={'accent'}>
+        {value}
+      </Text>
+    </li>
   );
 };

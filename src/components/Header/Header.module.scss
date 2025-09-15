@@ -3,14 +3,12 @@
 
 .header {
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 100px;
   background-color: $color-light;
 
-  @include laptop {
-    padding: 14px 16px;
+  &Content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .navGroup {
