@@ -28,7 +28,8 @@
       "styles": ["styles/*"],
       "utils": ["utils/*"],
       "hooks": ["hooks/*"],
-      "assets": ["assets/*"]
+      "assets": ["assets/*"],
+      "store":["store/*"]
     }
   },
   "include": ["src"]

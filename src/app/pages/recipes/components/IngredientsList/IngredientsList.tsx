@@ -1,10 +1,10 @@
-import type { Ingredient, Recipe } from 'api/types.ts';
 import Card from 'components/Card';
 import Loader from 'components/Loader';
 import Text from 'components/Text';
 import { routes } from 'config/routes.ts';
 import type { FC } from 'react';
 import { Link } from 'react-router';
+import type { Ingredient, Recipe } from 'store/models';
 
 import IngredientsCardAction from './IngredientsCardAction';
 import IngredientsCardCaption from './IngredientsCardCaption';

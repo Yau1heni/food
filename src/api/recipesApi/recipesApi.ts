@@ -1,6 +1,7 @@
-import type { ApiResponse, Recipe } from 'api/types.ts';
-import { instance } from 'config/axios-config.ts';
+import type { ApiResponse } from 'api/types.ts';
+import { instance } from 'config/axiosConfig.ts';
 import qs from 'qs';
+import type { Recipe } from 'store/models';
 
 type Filters = {
   name: Record<string, string>;
@@ -38,6 +39,7 @@ export const recipesApi = {
     const res = await instance.get<ApiResponse<Recipe[]>>(`/recipes?${queryString}`);
     return res.data;
   },
+
   async getRecipe(id: string) {
     const queryString = qs.stringify(
       { populate: ['ingradients', 'images', 'category', 'equipments', 'directions'] },

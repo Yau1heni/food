@@ -1,25 +1,38 @@
-import type { ApiResponse, RecipeCategory } from 'api/types.ts';
 import Button from 'components/Button';
 import Input from 'components/Input';
 import MultiDropdown, { type Option } from 'components/MultiDropdown';
 import SearchIcon from 'components/icons/SearchIcon';
-import { type FC, useCallback } from 'react';
+import { reaction } from 'mobx';
+import { observer } from 'mobx-react-lite';
+import { type FC, useCallback, useEffect, useRef, useState } from 'react';
+import rootStore from 'store/RootStore';
+import { type CategoryModel } from 'store/models';
 
 import styles from './Filters.module.scss';
 
 type FiltersProps = {
-  categories: ApiResponse<RecipeCategory[]> | null;
-  value: Option[];
-  setValue: (value: Option[]) => void;
-  searchTerm: string;
-  setSearchTerm: (searchTerm: string) => void;
-  setAppliedSearchTerm: (searchTerm: string) => void;
-  setPage: (page: number) => void;
+  categories: CategoryModel[] | null;
 };
 
-export const Filters: FC<FiltersProps> = (props) => {
-  const { categories, value, setValue, searchTerm, setSearchTerm, setAppliedSearchTerm, setPage } =
-    props;
+export const Filters: FC<FiltersProps> = observer(({ categories }) => {
+  const [localQuery, setLocalQuery] = useState('');
+  const isInitialized = useRef(false);
+
+  useEffect(() => {
+    const dispose = reaction(
+      () => rootStore.query.getParam('searchTerm'),
+      (searchString) => {
+        if (!isInitialized.current && searchString) {
+          setLocalQuery(searchString as string);
+          isInitialized.current = true;
+          dispose(); // Останавливаем реакцию после инициализации
+        }
+      },
+      { fireImmediately: true }
+    );
+
+    return () => dispose();
+  }, []);
 
   const getTitle = useCallback(function (value: Option[]) {
     return value.length > 0 ? value.map((v) => v.value).join(', ') : 'Categories';
@@ -27,36 +40,29 @@ export const Filters: FC<FiltersProps> = (props) => {
 
   if (categories === null) return null;
 
-  const options = categories.data.map((c) => ({
-    key: c.id.toString(),
-    value: c.title,
-  }));
-
   const onChangeCategories = (value: Option[]) => {
-    setPage(1);
-    setValue(value);
+    rootStore.query.category = value;
   };
 
   const onSearchFilter = () => {
-    setPage(1);
-    setAppliedSearchTerm(searchTerm);
+    rootStore.query.searchTerm = localQuery;
   };
 
   return (
     <div>
       <div className={styles.search}>
-        <Input value={searchTerm} onChange={setSearchTerm} />
+        <Input value={localQuery} onChange={setLocalQuery} />
         <Button onClick={onSearchFilter}>
           <SearchIcon />
         </Button>
       </div>
       <MultiDropdown
         className={styles.dropdown}
-        options={options}
-        value={value}
+        options={categories}
+        value={rootStore.query.category}
         onChange={onChangeCategories}
         getTitle={getTitle}
       />
     </div>
   );
-};
+});
