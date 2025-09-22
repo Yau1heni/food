@@ -113,7 +113,6 @@ export default class RecipesStore implements LocalStore {
       runInAction(() => {
         if (this._currentRequestId === requestId) {
           this._list = normalizeCollection(response.data, (listItem) => listItem.id);
-          rootStore.query.page = response.meta.pagination.page;
           this._pagination = response.meta.pagination;
           this._meta = Meta.success;
         }
@@ -155,12 +154,24 @@ export default class RecipesStore implements LocalStore {
     }
   }
 
+  private readonly favoriteDisposer = reaction(
+    () => rootStore.favorites.list.length,
+    () => {
+      this.getRecipes({
+        term: rootStore.query.searchTerm,
+        page: rootStore.query.page,
+        category: getCategoryKeys(rootStore.query.category),
+      });
+    }
+  );
+
   reset(): void {
     this._list = getInitialCollectionModel();
     this._currentRecipe = null;
     this._pagination = getInitialPaginationModel();
     this._meta = Meta.initial;
     this.dispose();
+    this.favoriteDisposer();
   }
 
   destroy(): void {

@@ -4,8 +4,15 @@
   max-width: 1440px;
   margin: 0 auto;
   padding: 14px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
 
    @include laptop {
     padding: 14px 16px;
+  }
+
+  @include tablet {
+    gap: 24px;
   }
 }

@@ -7,12 +7,13 @@ import LogoIcon from 'components/icons/LogoIcon';
 import UserIcon from 'components/icons/UserIcon';
 import { routes } from 'config/routes.ts';
 import { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 import { Burger } from './Burger/Burger.tsx';
 import styles from './Header.module.scss';
 
 export const Header = () => {
+  const { pathname, search } = useLocation();
   const [open, setOpen] = useState(false);
 
   const onOpen = () => {
@@ -30,7 +31,12 @@ export const Header = () => {
           <Burger onOpen={onOpen} />
           <HeaderModal open={open} onClose={onClose} />
           <div className={styles.navGroup}>
-            <Link to={routes.recipes.mask} className={styles.logo} aria-label={'Food Client logo'}>
+            <Link
+              to={routes.main.mask}
+              state={{ from: pathname + search }}
+              className={styles.logo}
+              aria-label={'Food Client logo'}
+            >
               <LogoIcon />
               <Text tag={'h1'} view={'p-20'} weight={'bold'}>
                 Food Client

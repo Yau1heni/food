@@ -2,13 +2,15 @@ import { Filters } from 'app/pages/recipes/components/Filters';
 import banner from 'assets/images/banner.webp';
 import { Container } from 'components/Container';
 import { Layout } from 'components/Layout';
-import Pagination from 'components/Pagination/Pagination.tsx';
+import Pagination from 'components/Pagination';
 import Text from 'components/Text';
 import { useLocalStore } from 'hooks/useLocalStore.ts';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import CategoriesStore from 'store/CategoriesStore';
 import RecipesStore from 'store/RecipesStore';
+import rootStore from 'store/RootStore';
+import { PAGINATION_LIMIT } from 'store/models';
 import { Meta } from 'utils/meta.ts';
 
 import styles from './RecipesPage.module.scss';
@@ -35,16 +37,19 @@ export const RecipesPage = observer(() => {
           <Description />
           <Filters categories={categoriesStore.list} />
           <IngredientsList
-            loading={recipesStore.meta === Meta.loading}
+            loading={
+              recipesStore.meta === Meta.loading || rootStore.favorites.meta === Meta.loading
+            }
             recipes={recipesStore.list}
           />
-          {recipesStore.meta === Meta.success && recipesStore.pagination.total !== 0 && (
-            <Pagination
-              page={recipesStore.pagination.page}
-              onChange={recipesStore.setPage}
-              total={recipesStore.pagination.total}
-            />
-          )}
+          {recipesStore.meta === Meta.success &&
+            recipesStore.pagination.total > PAGINATION_LIMIT && (
+              <Pagination
+                page={recipesStore.pagination.page}
+                onChange={recipesStore.setPage}
+                total={recipesStore.pagination.total}
+              />
+            )}
         </section>
       </Container>
     </Layout>

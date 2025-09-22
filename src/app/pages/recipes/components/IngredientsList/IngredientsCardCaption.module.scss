@@ -1,5 +1,9 @@
 .captionSlot {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+}
+
+.cookingTime {
+  display: flex;
   gap: 4px;
 }

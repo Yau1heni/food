@@ -1,7 +1,7 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import qs from 'qs';
 import type { ParsedQs } from 'qs';
-import { type CategoryModel } from 'store/models';
+import { type CategoryModel, START_PAGE } from 'store/models';
 
 type PrivateFields = '_params' | '_search';
 
@@ -26,8 +26,7 @@ export default class QueryParamsStore {
 
   setParam(key: string, value?: string | number | null) {
     if (value === undefined || value === null || value === '') {
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-      delete this._params[key];
+      Reflect.deleteProperty(this._params, key);
     } else {
       this._params = { ...this._params, [key]: String(value) };
     }
@@ -53,17 +52,17 @@ export default class QueryParamsStore {
 
   get page(): number {
     const value = this._params.page;
-    return value ? Number(value) : 1;
+    return value ? Number(value) : START_PAGE;
   }
   set page(p: number) {
-    this.setParam('page', p > 1 ? p : null); // не храним page=1
+    this.setParam('page', p);
   }
 
   get searchTerm(): string {
     return (this._params.searchTerm as string) || '';
   }
   set searchTerm(term: string) {
-    this.page = 1;
+    this.page = START_PAGE;
     this.setParam('searchTerm', term);
   }
 
@@ -79,6 +78,6 @@ export default class QueryParamsStore {
   }
   set category(value: CategoryModel[]) {
     this.setParam('category', JSON.stringify(value));
-    this.page = 1;
+    this.page = START_PAGE;
   }
 }

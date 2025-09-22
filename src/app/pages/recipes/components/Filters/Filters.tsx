@@ -6,12 +6,12 @@ import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { type FC, useCallback, useEffect, useRef, useState } from 'react';
 import rootStore from 'store/RootStore';
-import { type CategoryModel } from 'store/models';
+import { type CategoryModel, type Nullable } from 'store/models';
 
 import styles from './Filters.module.scss';
 
 type FiltersProps = {
-  categories: CategoryModel[] | null;
+  categories: Nullable<CategoryModel[]>;
 };
 
 export const Filters: FC<FiltersProps> = observer(({ categories }) => {

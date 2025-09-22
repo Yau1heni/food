@@ -7,6 +7,7 @@ export type { Equipments } from './recipes/equipments.ts';
 export type { FiltersModel } from './recipes/filters.ts';
 export { getInitialFiltersModel } from './recipes/filters.ts';
 export type { PaginationModel } from './recipes/pagination.ts';
+export { PAGINATION_LIMIT, START_PAGE } from './recipes/pagination.ts';
 export { getInitialPaginationModel } from './recipes/pagination.ts';
 export type { CollectionModel } from './shared/collection.ts';
 export {
@@ -14,3 +15,5 @@ export {
   normalizeCollection,
   linearizeCollection,
 } from './shared/collection.ts';
+export type { Favorites } from './favorites/favorites.ts';
+export type * from './shared/utills.ts';

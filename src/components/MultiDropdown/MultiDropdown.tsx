@@ -66,6 +66,7 @@ const MultiDropdown: FC<MultiDropdownProps> = (props) => {
         onChange={setSearch}
         readOnly={disabled}
         afterSlot={<ArrowDownIcon color={'secondary'} />}
+        autoComplete={'off'}
       />
 
       <DropdownList

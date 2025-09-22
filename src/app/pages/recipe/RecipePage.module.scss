@@ -20,14 +20,7 @@
   }
 
   &Container {
-    display: flex;
-    flex-direction: column;
-    gap: 48px;
     position: relative;
-
-    @include tablet {
-      gap: 24px;
-    }
 
     .recipeHeader {
       display: flex;
