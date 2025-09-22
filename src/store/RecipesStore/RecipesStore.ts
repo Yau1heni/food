@@ -15,6 +15,7 @@ import {
   getCategoryKeys,
   getInitialCollectionModel,
   getInitialPaginationModel,
+  type GetRecipesArgs,
   linearizeCollection,
   normalizeCollection,
   type PaginationModel,
@@ -68,9 +69,13 @@ export default class RecipesStore implements LocalStore {
         term: rootStore.query.searchTerm,
         page: rootStore.query.page,
         categories: rootStore.query.category,
+        isVegetarian: rootStore.query.vegetarian,
       }),
-      ({ term, page, categories }) => {
-        this.getRecipes({ term, page, category: getCategoryKeys(categories) });
+      (data) => {
+        this.getRecipes({
+          ...data,
+          categories: getCategoryKeys(data.categories),
+        });
       },
       { fireImmediately: true, equals: comparer.structural }
     );
@@ -100,7 +105,7 @@ export default class RecipesStore implements LocalStore {
     rootStore.query.page = page;
   }
 
-  async getRecipes({ term, page, category }: { page: number; term: string; category: string }) {
+  async getRecipes(data: GetRecipesArgs) {
     const requestId = ++this._currentRequestId;
 
     this._meta = Meta.loading;
@@ -108,7 +113,7 @@ export default class RecipesStore implements LocalStore {
     this._errorMessage = null;
 
     try {
-      const response = await recipesApi.getRecipes(page, term, category);
+      const response = await recipesApi.getRecipes(data);
 
       runInAction(() => {
         if (this._currentRequestId === requestId) {
@@ -160,7 +165,8 @@ export default class RecipesStore implements LocalStore {
       this.getRecipes({
         term: rootStore.query.searchTerm,
         page: rootStore.query.page,
-        category: getCategoryKeys(rootStore.query.category),
+        categories: getCategoryKeys(rootStore.query.category),
+        isVegetarian: false,
       });
     }
   );

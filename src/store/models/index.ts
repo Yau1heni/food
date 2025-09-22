@@ -1,4 +1,4 @@
-export type { Recipe } from './recipes/recipes.ts';
+export type { Recipe, GetRecipesArgs } from './recipes/recipes.ts';
 export { normalizeCategory, getCategoryKeys } from './categories/category.ts';
 export type { CategoryApi, CategoryModel } from './categories/category.ts';
 export type { Direction } from './recipes/directions.ts';

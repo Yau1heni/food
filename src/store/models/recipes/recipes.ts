@@ -26,3 +26,10 @@ export type Recipe = StrapiBase & {
   equipments: Equipments[];
   directions: Direction[];
 };
+
+export type GetRecipesArgs = {
+  page: number;
+  term: string;
+  categories: string;
+  isVegetarian?: boolean;
+};

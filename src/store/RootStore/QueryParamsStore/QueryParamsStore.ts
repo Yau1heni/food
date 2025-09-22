@@ -16,11 +16,13 @@ export default class QueryParamsStore {
 
       setSearch: action,
       setParam: action,
+      reset: action.bound,
 
       page: computed,
       searchTerm: computed,
       category: computed,
       searchString: computed,
+      vegetarian: computed,
     });
   }
 
@@ -79,5 +81,18 @@ export default class QueryParamsStore {
   set category(value: CategoryModel[]) {
     this.setParam('category', JSON.stringify(value));
     this.page = START_PAGE;
+  }
+
+  get vegetarian(): boolean {
+    return this._params.isVegetarian === 'true';
+  }
+  set vegetarian(isVegetarian: boolean) {
+    this.page = START_PAGE;
+    this.setParam('isVegetarian', String(isVegetarian));
+  }
+
+  reset() {
+    this._params = {};
+    this._search = '';
   }
 }

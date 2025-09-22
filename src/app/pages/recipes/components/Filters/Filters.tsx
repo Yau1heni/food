@@ -1,6 +1,8 @@
 import Button from 'components/Button';
+import CheckBox from 'components/CheckBox';
 import Input from 'components/Input';
 import MultiDropdown, { type Option } from 'components/MultiDropdown';
+import Text from 'components/Text';
 import SearchIcon from 'components/icons/SearchIcon';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react-lite';
@@ -48,21 +50,36 @@ export const Filters: FC<FiltersProps> = observer(({ categories }) => {
     rootStore.query.searchTerm = localQuery;
   };
 
+  const onChangeVegetarian = (isVegetarian: boolean) => {
+    rootStore.query.vegetarian = isVegetarian;
+  };
+
   return (
-    <div>
+    <div className={styles.filters}>
       <div className={styles.search}>
-        <Input value={localQuery} onChange={setLocalQuery} />
+        <Input value={localQuery} onChange={setLocalQuery} id={'search'} />
         <Button onClick={onSearchFilter}>
           <SearchIcon />
         </Button>
       </div>
-      <MultiDropdown
-        className={styles.dropdown}
-        options={categories}
-        value={rootStore.query.category}
-        onChange={onChangeCategories}
-        getTitle={getTitle}
-      />
+      <div className={styles.filtersContainer}>
+        <div className={styles.leftGroup}>
+          <MultiDropdown
+            className={styles.dropdown}
+            options={categories}
+            value={rootStore.query.category}
+            onChange={onChangeCategories}
+            getTitle={getTitle}
+          />
+          <div className={styles.vegetarian}>
+            <Text>Vegetarian:</Text>
+            <CheckBox checked={rootStore.query.vegetarian} onChange={onChangeVegetarian} />
+          </div>
+        </div>
+        <div>
+          <Button onClick={rootStore.query.reset}>Reset filters</Button>
+        </div>
+      </div>
     </div>
   );
 });

@@ -23,6 +23,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ onChange, className, ...rest }) => 
         className={cn(styles.checkbox, className)}
         onChange={handleOnchange}
         type="checkbox"
+        id={'checkBox'}
         {...rest}
       />
     </label>
