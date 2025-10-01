@@ -1,5 +1,6 @@
 import App from 'app/App.tsx';
 import { RecipePage, RecipesPage } from 'app/pages';
+import { FavoritesPage } from 'app/pages/favorites/FavoritesPage.tsx';
 import { routes } from 'config/routes.ts';
 import { Navigate, type RouteObject } from 'react-router';
 
@@ -9,12 +10,16 @@ export const routesConfig: RouteObject[] = [
     element: <App />,
     children: [
       {
-        path: routes.recipes.mask,
+        path: routes.main.mask,
         element: <RecipesPage />,
       },
       {
         path: routes.recipe.mask,
         element: <RecipePage />,
+      },
+      {
+        path: routes.favorites.mask,
+        element: <FavoritesPage />,
       },
     ],
   },

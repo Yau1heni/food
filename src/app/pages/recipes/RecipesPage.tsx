@@ -1,68 +1,57 @@
-import { categoriesApi } from 'api/categoriesApi';
-import { useFetchRecipes } from 'app/pages/recipes/useFetchRecipes.ts';
+import { Filters } from 'app/pages/recipes/components/Filters';
 import banner from 'assets/images/banner.webp';
 import { Container } from 'components/Container';
 import { Layout } from 'components/Layout';
-import { type Option } from 'components/MultiDropdown';
-import Pagination from 'components/Pagination/Pagination.tsx';
+import Pagination from 'components/Pagination';
 import Text from 'components/Text';
-import { useFetch } from 'hooks/useFetch.ts';
-import { useState } from 'react';
+import { useLocalStore } from 'hooks/useLocalStore.ts';
+import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
+import CategoriesStore from 'store/CategoriesStore';
+import RecipesStore from 'store/RecipesStore';
+import rootStore from 'store/RootStore';
+import { PAGINATION_LIMIT } from 'store/models';
+import { Meta } from 'utils/meta.ts';
 
 import styles from './RecipesPage.module.scss';
 import { Description } from './components/Description';
-import { Filters } from './components/Filters';
 import { IngredientsList } from './components/IngredientsList';
 
-export const RecipesPage = () => {
-  const [selectedCategories, setSelectedCategories] = useState<Option[]>([]);
+export const RecipesPage = observer(() => {
+  const categoriesStore = useLocalStore(() => new CategoriesStore());
+  const recipesStore = useLocalStore(() => new RecipesStore());
 
-  const {
-    data: categories,
-    error: errorCategories,
-    loading: loadingCategories,
-  } = useFetch(categoriesApi.getCategories);
+  useEffect(() => {
+    categoriesStore.getCategories();
+  }, [categoriesStore]);
 
-  const {
-    recipes,
-    error,
-    loading,
-    setAppliedSearchTerm,
-    searchTerm,
-    setSearchTerm,
-    page,
-    setPage,
-  } = useFetchRecipes(selectedCategories);
-  if (error || errorCategories) return <Text>{error}</Text>;
+  if (recipesStore.errorMessage) return <Text>{recipesStore.errorMessage}</Text>;
 
   return (
     <Layout>
       <section className={styles.bannerImage}>
         <img src={banner} alt="banner" />
       </section>
-
       <Container>
         <section className={styles.content}>
           <Description />
-          <Filters
-            value={selectedCategories}
-            searchTerm={searchTerm}
-            setValue={setSelectedCategories}
-            setSearchTerm={setSearchTerm}
-            setAppliedSearchTerm={setAppliedSearchTerm}
-            categories={categories}
-            setPage={setPage}
+          <Filters categories={categoriesStore.list} />
+          <IngredientsList
+            loading={
+              recipesStore.meta === Meta.loading || rootStore.favorites.meta === Meta.loading
+            }
+            recipes={recipesStore.list}
           />
-          {
-            <>
-              <IngredientsList loading={loading || loadingCategories} recipes={recipes?.data} />
-              {recipes?.meta.pagination.total !== 0 && (
-                <Pagination page={page} onChange={setPage} total={recipes?.meta.pagination.total} />
-              )}
-            </>
-          }
+          {recipesStore.meta === Meta.success &&
+            recipesStore.pagination.total > PAGINATION_LIMIT && (
+              <Pagination
+                page={recipesStore.pagination.page}
+                onChange={recipesStore.setPage}
+                total={recipesStore.pagination.total}
+              />
+            )}
         </section>
       </Container>
     </Layout>
   );
-};
+});

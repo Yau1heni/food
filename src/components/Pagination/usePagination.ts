@@ -1,3 +1,5 @@
+import { PAGINATION_LIMIT } from 'store/models';
+
 export type UsePaginationProps = {
   total: number; // всего страниц
   page: number; // текущая страница
@@ -15,7 +17,7 @@ const createRange = (start: number, end: number): number[] => {
 export const usePagination = ({
   total,
   page,
-  limit = 9,
+  limit = PAGINATION_LIMIT,
 }: UsePaginationProps): UsePaginationResult => {
   const pageCount = Math.ceil(total / Math.max(limit, 1));
 

@@ -3,6 +3,7 @@ import Text from 'components/Text';
 import ArrowLeftIcon from 'components/icons/ArrowLeftIcon';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import type { FC } from 'react';
+import { START_PAGE } from 'store/models';
 
 import styles from './Pagination.module.scss';
 import { usePagination } from './usePagination.ts';
@@ -16,11 +17,11 @@ type PaginationProps = {
   onChange?: (value: number) => void;
 };
 
-const Pagination: FC<PaginationProps> = ({ total = 0, page = 1, onChange }) => {
+const Pagination: FC<PaginationProps> = ({ total = 0, page = START_PAGE, onChange }) => {
   const pages = usePagination({ total, page });
 
   const handlePrev = () => {
-    if (page > 1) onChange?.(page - 1);
+    if (page > START_PAGE) onChange?.(page - 1);
   };
 
   const handleNext = () => {
@@ -33,14 +34,14 @@ const Pagination: FC<PaginationProps> = ({ total = 0, page = 1, onChange }) => {
     <div className={styles.pagination}>
       <button
         onClick={handlePrev}
-        disabled={page === 1}
-        className={cn(styles.arrowButton, page === 1 && styles.disabled)}
+        disabled={page === START_PAGE}
+        className={cn(styles.arrowButton, page === START_PAGE && styles.disabled)}
       >
         <ArrowRightIcon
           width={32}
           widths={32}
           viewBox={'0 0 32 32'}
-          color={page === 1 ? 'secondary' : 'primary'}
+          color={page === START_PAGE ? 'secondary' : 'primary'}
         />
       </button>
 

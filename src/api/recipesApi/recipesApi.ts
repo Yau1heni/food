@@ -1,27 +1,37 @@
-import type { ApiResponse, Recipe } from 'api/types.ts';
-import { instance } from 'config/axios-config.ts';
+import type { ApiResponse } from 'api/types.ts';
+import { instance } from 'config/axiosConfig.ts';
 import qs from 'qs';
+import type { GetRecipesArgs, Recipe } from 'store/models';
 
 type Filters = {
   name: Record<string, string>;
+  vegetarian?: Record<string, boolean>;
   category?: {
     id: Record<string, string[]>;
   };
 };
 
 export const recipesApi = {
-  async getRecipes(page = 1, term = '', category = 'Categories') {
+  async getRecipes(data: GetRecipesArgs) {
+    const { page = 1, term = '', categories = 'Categories', isVegetarian } = data;
+
     const filters: Filters = {
       name: {
         $containsi: term,
       },
     };
 
-    if (category) {
+    if (categories) {
       filters.category = {
         id: {
-          $in: category.split(','),
+          $in: categories.split(','),
         },
+      };
+    }
+
+    if (isVegetarian) {
+      filters.vegetarian = {
+        $eq: isVegetarian,
       };
     }
 
@@ -38,6 +48,7 @@ export const recipesApi = {
     const res = await instance.get<ApiResponse<Recipe[]>>(`/recipes?${queryString}`);
     return res.data;
   },
+
   async getRecipe(id: string) {
     const queryString = qs.stringify(
       { populate: ['ingradients', 'images', 'category', 'equipments', 'directions'] },

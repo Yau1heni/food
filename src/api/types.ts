@@ -1,9 +1,11 @@
-type StrapiBase = {
+import type { Nullable } from 'store/models';
+
+export type StrapiBase = {
   id: number;
   documentId: string;
 };
 
-type Meta = {
+type MetaApi = {
   pagination: {
     page: number;
     pageSize: number;
@@ -12,14 +14,14 @@ type Meta = {
   };
 };
 
-type StrapiImage = StrapiBase & {
+export type StrapiImage = StrapiBase & {
   url: string;
   name: string;
   alternativeText: string;
   caption: string;
   width: number;
   height: number;
-  formats: string;
+  formats: FormatImage;
   hash: string;
   ext: string;
   mime: string;
@@ -28,53 +30,22 @@ type StrapiImage = StrapiBase & {
   provider: string;
 };
 
-export type Ingredient = {
-  id: number;
+type ImageSize = {
+  ext: string;
+  url: string;
+  hash: string;
+  mime: string;
   name: string;
-  amount: number;
-  unit: string;
+  path: Nullable<string>;
+  size: number;
+  width: number;
+  height: number;
+  sizeInBytes: number;
 };
 
-export type Equipments = {
-  id: number;
-  name: string;
-};
-
-export type Direction = {
-  id: number;
-  description: string;
-};
-
-export type RecipeCategory = StrapiBase & {
-  title: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-};
-
-export type Recipe = StrapiBase & {
-  name: string;
-  totalTime: number;
-  cookingTime: number;
-  preparationTime: number;
-  servings: number;
-  likes: number;
-  calories: number;
-  rating: number;
-  summary: string;
-  vegetarian: boolean;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  // при добавлении соответствующих query params
-  images: StrapiImage[];
-  ingradients: Ingredient[];
-  category: RecipeCategory;
-  equipments: Equipments[];
-  directions: Direction[];
-};
+type FormatImage = Record<'small' | 'medium' | 'thumbnail', ImageSize>;
 
 export type ApiResponse<T> = {
   data: T;
-  meta: Meta;
+  meta: MetaApi;
 };

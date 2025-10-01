@@ -3,12 +3,12 @@ export const routes = {
     mask: '/',
     create: () => '/',
   },
-  recipes: {
-    mask: '/recipes',
-    create: () => '/recipes',
-  },
   recipe: {
     mask: '/recipes/:id',
     create: (id: string) => `/recipes/${id}`,
+  },
+  favorites: {
+    mask: '/favorites',
+    create: () => '/favorites',
   },
 };

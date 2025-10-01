@@ -28,7 +28,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         ref={ref}
         onChange={handleOnchange}
         type="text"
-        id={'input'}
         {...rest}
       />
       <div className={styles.afterSlot}>{afterSlot}</div>
