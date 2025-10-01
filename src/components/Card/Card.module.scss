@@ -1,61 +1,93 @@
-@import "styles/variables.scss";
+@use 'styles/variables.scss' as *;
+@use 'styles/mixins.scss' as *;
 
 .card {
   display: flex;
   flex-direction: column;
-  width: 348px;
-  cursor: pointer;
-}
-
-.card:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-}
-
-.image {
-  width: 100%;
-  height: 350px;
-  overflow: hidden;
-  background: $color-grey;
-}
-
-.image img {
-  width: 100%;
+  width: 350px;
   height: 100%;
-  object-fit: cover;
-  background-repeat: no-repeat;
-}
-
-.cardBody {
-  padding: $space-xl $space-xs;
+  cursor: pointer;
   background: $color-light;
-}
+  border-radius: $border-radius;
 
-.content {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
-}
+  @include tablet {
+    flex-direction: row;
+    width: 100%;
+  }
 
-.captionSlot {
-  font-weight: 500;
-  font-size: $font-size-xs;
-  color: $color-secondary;
-}
+  @include mobile {
+    flex-direction: column;
+  }
 
-.footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  &:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  }
 
-.contentSlot {
-  font-weight: 700;
-  font-size: $font-size-m;
-  line-height: 122%;
-}
+  .image {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    background: $color-grey;
+    border-radius: $border-radius 0 0;
 
+    @include tablet {
+      width: 50%;
+    }
 
-.subTitle {
-  color: $color-secondary;
+    @include mobile {
+      width: 100%;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .cardBody {
+    padding: $space-xl $space-xs;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    @include tablet {
+      width: 50%;
+    }
+
+    @include mobile {
+      width: 100%;
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .subTitle {
+      color: $color-secondary;
+    }
+
+    .captionSlot {
+      font-weight: 500;
+      font-size: $font-size-xs;
+      color: $color-secondary;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+
+      .contentSlot {
+        font-weight: 700;
+        font-size: $font-size-m;
+        line-height: 122%;
+      }
+    }
+  }
 }

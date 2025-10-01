@@ -22,10 +22,13 @@
     "baseUrl": "src",
     "paths": {
       "app": ["app/*"],
+      "api": ["api/*"],
       "components": ["components/*"],
       "config": ["config/*"],
       "styles": ["styles/*"],
-      "utils": ["utils/*"]
+      "utils": ["utils/*"],
+      "hooks": ["hooks/*"],
+      "assets": ["assets/*"]
     }
   },
   "include": ["src"]

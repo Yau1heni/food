@@ -24,4 +24,5 @@ export default defineConfig({
   resolve: {
     alias: parseTsConfigPaths(tsconfig.compilerOptions.paths),
   },
+  base: '/recipes',
 });

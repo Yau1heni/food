@@ -1,4 +1,4 @@
-@import 'styles/variables.scss';
+@use 'styles/variables.scss' as *;
 
 .dropdown {
   position: absolute;
@@ -8,6 +8,7 @@
   overflow-y: auto;
   background-color: $color-light;
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.25);
+  border-radius: $border-radius;
 }
 
 .option {

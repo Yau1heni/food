@@ -1,17 +1,7 @@
 import App from 'app/App.tsx';
-import { FoodPage } from 'app/pages';
+import { RecipePage, RecipesPage } from 'app/pages';
+import { routes } from 'config/routes.ts';
 import { Navigate, type RouteObject } from 'react-router';
-
-export const routes = {
-  main: {
-    mask: '/',
-    create: () => '/',
-  },
-  food: {
-    mask: 'food',
-    create: () => '/food',
-  },
-};
 
 export const routesConfig: RouteObject[] = [
   {
@@ -19,8 +9,12 @@ export const routesConfig: RouteObject[] = [
     element: <App />,
     children: [
       {
-        path: routes.food.mask,
-        element: <FoodPage />,
+        path: routes.recipes.mask,
+        element: <RecipesPage />,
+      },
+      {
+        path: routes.recipe.mask,
+        element: <RecipePage />,
       },
     ],
   },

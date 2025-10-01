@@ -11,7 +11,15 @@ export type IconProps = React.SVGAttributes<SVGElement> & {
 };
 
 const Icon: React.FC<React.PropsWithChildren<IconProps>> = (props) => {
-  const { className, color, width = 24, height = 24, children, ...rest } = props;
+  const {
+    className,
+    color,
+    width = 24,
+    height = 24,
+    children,
+    viewBox = '0 0 24 24',
+    ...rest
+  } = props;
 
   return (
     <svg
@@ -20,8 +28,8 @@ const Icon: React.FC<React.PropsWithChildren<IconProps>> = (props) => {
       color={color}
       stroke="currentColor"
       fill="currentColor"
-      viewBox="0 0 24 24"
-      className={cn(color ? styles[color] : undefined, className)}
+      viewBox={viewBox}
+      className={cn(color ? styles[color] : undefined, styles.icon, className)}
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
     >

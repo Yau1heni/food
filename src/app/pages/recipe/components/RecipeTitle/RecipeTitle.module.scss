@@ -1,0 +1,11 @@
+@use 'styles/variables.scss' as *;
+@use 'styles/mixins.scss' as *;
+
+.recipeTitle {
+  font-size: $font-size-title;
+  line-height: 109%;
+
+  @include mobile {
+    font-size: $font-size-xl;
+  }
+}

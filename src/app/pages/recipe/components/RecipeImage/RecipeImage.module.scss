@@ -1,0 +1,15 @@
+@use 'styles/mixins.scss' as *;
+@use 'styles/variables.scss' as *;
+
+.recipeImage {
+  width: 448px;
+
+  @include mobile {
+    max-width: 344px;
+  }
+}
+
+.image {
+  width: 100%;
+  border-radius: $border-radius;
+}
